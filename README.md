@@ -4,9 +4,9 @@ Static site for your bio, research, and animation gallery. No build step require
 
 ## Quick start
 
-1. Edit `index.html` — name, bio, links, research list.
-2. Put animation files in `assets/animations/` (see formats below).
-3. Register each animation in `js/animations.js`.
+1. Edit `index.html` — name, bio, contact.
+2. Edit `js/work.js` — research themes and linked media per project.
+3. Put animation files in `assets/animations/` (see formats below).
 4. Push to GitHub and enable Pages (see below).
 
 Local preview: open `index.html` in a browser, or run a simple server:
@@ -28,7 +28,7 @@ Then visit `http://localhost:8000`.
 | **MP4 (H.264)** | Most research loops | Smallest size at good quality; use `<video>`. |
 | **WebM** | Web-only | Often smaller than MP4; add as second `<source>` if needed. |
 | **GIF** | Legacy / simple exports | Large files; use only if you already have GIFs. |
-| **Poster JPG** | Video thumbnails | Optional `poster` in `animations.js` for faster gallery load. |
+| **Poster JPG** | Video thumbnails | Optional `poster` in `work.js` for faster gallery load. |
 
 **Tips**
 
@@ -65,19 +65,21 @@ If you use Option B, you may need a `<base href="/personal-website/">` in `index
 
 Add a `CNAME` file with your domain, then configure DNS at your registrar (GitHub docs: [Custom domains](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site)).
 
-## Adding an animation
+## Adding a visualization to a project
 
 1. Save file, e.g. `assets/animations/my-simulation.mp4`.
-2. Add to `js/animations.js`:
+2. Add to that project's `media` array in `js/work.js`:
 
 ```javascript
-{
-  type: "video",
-  src: "assets/animations/my-simulation.mp4",
-  poster: "assets/animations/my-simulation-poster.jpg", // optional
-  title: "My simulation",
-  description: "Caption and link to paper if you like.",
-},
+media: [
+  {
+    type: "video",
+    src: "assets/animations/my-simulation.mp4",
+    poster: "assets/animations/my-simulation-poster.jpg", // optional
+    title: "My simulation",
+    description: "Caption and link to paper if you like.",
+  },
+],
 ```
 
 3. Commit and push; Pages updates in 1–2 minutes.
@@ -89,7 +91,7 @@ personal_website/
 ├── index.html
 ├── css/style.css
 ├── js/
-│   ├── animations.js   ← your animation list
+│   ├── work.js         ← research themes + media per project
 │   └── main.js
 ├── assets/animations/  ← MP4, GIF, posters
 └── README.md

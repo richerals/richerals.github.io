@@ -3,87 +3,125 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Personal website — research, animations, and projects." />
-  <title>richerals — Research</title>
+  <meta name="description" content="Zhiyao Chen — nonlinear systems, geophysics, scientific visualization, and computational modeling at Penn VIPER." />
+  <title>Zhiyao Chen — Research</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+  <div class="page-bg" aria-hidden="true"></div>
+
   <header class="site-header">
     <a class="logo" href="index.html">richerals</a>
     <nav aria-label="Main">
       <a href="index.html" class="nav-active">Home</a>
-      <a href="#research">Research</a>
-      <a href="#animations">Animations</a>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
 
   <main>
     <section class="hero">
-      <p class="eyebrow">Research · Visualization</p>
-      <h1>Exploring ideas through<br />computation and motion</h1>
-      <p class="lead">
-        Short bio: what you study, where you work, and what you care about.
-        Replace this with 2–3 sentences about your research focus.
-      </p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="#animations">View animations</a>
-        <a class="btn btn-ghost" href="https://github.com/richerals" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <div class="hero-layout">
+        <div class="hero-copy">
+          <p class="eyebrow">University of Pennsylvania · VIPER</p>
+          <h1>Zhiyao Chen</h1>
+          <p class="hero-tagline">
+            Physics &amp; geophysics through simulation, visualization, and code.
+          </p>
+          <p class="lead philosophy">
+            I care about making complex physical behavior legible—through models you can run and pictures you can reason with.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#projects">View projects</a>
+            <a class="btn btn-ghost" href="#about">About me</a>
+            <a class="btn btn-ghost" href="https://github.com/richerals" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="orb orb-1"></div>
+          <div class="orb orb-2"></div>
+          <div class="orb orb-3"></div>
+          <div class="hero-grid-lines"></div>
+        </div>
       </div>
     </section>
 
-    <section id="research" class="section">
-      <h2>Research</h2>
-      <p class="section-intro">
-        Summarize your main research themes. Link papers or preprints when you have them.
-      </p>
-      <ul class="research-list">
-        <li>
-          <h3>Topic or project title</h3>
-          <p>One-line description. <a href="#">Paper / project link</a></p>
-        </li>
-        <li>
-          <h3>Another topic</h3>
-          <p>Description and optional link.</p>
-        </li>
-      </ul>
+    <section id="about" class="section section-about">
+      <div class="section-head">
+        <p class="section-label">About</p>
+        <h2>About me</h2>
+      </div>
+      <div class="about-panel">
+        <div class="about-prose">
+          <p>
+            I am an incoming student at the University of Pennsylvania interested in nonlinear systems,
+            geophysics, scientific visualization, and computational modeling.
+          </p>
+          <p>
+            My work explores how physical systems can be understood through simulation, animation, and
+            interactive computation—turning equations into pictures you can reason about and models you can run.
+          </p>
+        </div>
+        <ul class="about-pills" aria-label="Research interests">
+          <li>Nonlinear dynamics</li>
+          <li>Geophysics</li>
+          <li>Scientific visualization</li>
+          <li>Computational modeling</li>
+        </ul>
+      </div>
     </section>
 
-    <section id="animations" class="section">
-      <h2>Research animations</h2>
-      <p class="section-intro">
-        Visual explanations from your work. Add entries in
-        <code>js/animations.js</code> and put media files in <code>assets/animations/</code>.
-      </p>
-      <div id="animation-gallery" class="gallery" role="list"></div>
+    <section id="projects" class="section section-projects">
+      <div class="section-head">
+        <p class="section-label">Research &amp; visualization</p>
+        <h2>Projects</h2>
+        <p class="section-intro">
+          Each topic pairs written context with simulations and figures as they are added.
+        </p>
+      </div>
+      <div id="projects-list" class="projects-list" role="list"></div>
     </section>
 
     <section id="contact" class="section section-contact">
-      <h2>Contact</h2>
-      <p>
-        <a href="mailto:you@example.edu">you@example.edu</a>
-        ·
-        <a href="https://scholar.google.com/" target="_blank" rel="noopener noreferrer">Google Scholar</a>
-        ·
-        <a href="https://github.com/richerals" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </p>
+      <div class="section-head section-head--inline">
+        <div>
+          <p class="section-label">Say hello</p>
+          <h2>Contact</h2>
+        </div>
+        <p class="contact-tagline">Collaborations on modeling, geophysics, and visualization welcome.</p>
+      </div>
+      <div class="contact-row">
+        <a class="contact-item" href="mailto:zhiyaoc@seas.upenn.edu">
+          <span class="contact-item-label">Penn</span>
+          <span class="contact-item-value">zhiyaoc@seas.upenn.edu</span>
+        </a>
+        <a class="contact-item" href="mailto:njchrisyao@gmail.com">
+          <span class="contact-item-label">Email</span>
+          <span class="contact-item-value">njchrisyao@gmail.com</span>
+        </a>
+        <a class="contact-item" href="https://github.com/richerals" target="_blank" rel="noopener noreferrer">
+          <span class="contact-item-label">GitHub</span>
+          <span class="contact-item-value">richerals</span>
+        </a>
+      </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <p>© <span id="year"></span> richerals</p>
+    <p>© <span id="year"></span> Zhiyao Chen</p>
   </footer>
 
-  <dialog id="lightbox" class="lightbox" aria-label="Animation preview">
+  <dialog id="lightbox" class="lightbox" aria-label="Media preview">
     <button type="button" class="lightbox-close" aria-label="Close">&times;</button>
     <div class="lightbox-content"></div>
     <p class="lightbox-caption"></p>
   </dialog>
 
-  <script src="js/animations.js"></script>
+  <script src="js/work.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

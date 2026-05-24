@@ -1,5 +1,5 @@
 (function () {
-  const gallery = document.getElementById("animation-gallery");
+  const projectsList = document.getElementById("projects-list");
   const lightbox = document.getElementById("lightbox");
   const lightboxContent = lightbox?.querySelector(".lightbox-content");
   const lightboxCaption = lightbox?.querySelector(".lightbox-caption");
@@ -7,7 +7,13 @@
 
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
-  function createMedia(item) {
+  function escapeHtml(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  function createMedia(item, { autoplay = false, controls = false } = {}) {
     if (item.type === "video") {
       const video = document.createElement("video");
       video.src = item.src;
@@ -16,11 +22,13 @@
       video.playsInline = true;
       video.preload = "metadata";
       if (item.poster) video.poster = item.poster;
+      if (autoplay) video.autoplay = true;
+      if (controls) video.controls = true;
       return video;
     }
     const img = document.createElement("img");
     img.src = item.src;
-    img.alt = item.title || "Research animation";
+    img.alt = item.title || "Project visualization";
     img.loading = "lazy";
     return img;
   }
@@ -28,62 +36,102 @@
   function openLightbox(item) {
     if (!lightbox || !lightboxContent || !lightboxCaption) return;
     lightboxContent.innerHTML = "";
-    const media = createMedia(item);
-    if (media.tagName === "VIDEO") {
-      media.controls = true;
-      media.autoplay = true;
-    }
+    const media = createMedia(item, { controls: true, autoplay: true });
     lightboxContent.appendChild(media);
     lightboxCaption.textContent = [item.title, item.description].filter(Boolean).join(" — ");
     lightbox.showModal();
   }
 
-  function renderGallery() {
-    if (!gallery) return;
-
-    if (!ANIMATIONS.length) {
-      gallery.innerHTML =
-        '<p class="gallery-empty">No animations yet. Add entries in <code>js/animations.js</code> and media in <code>assets/animations/</code>.</p>';
-      return;
-    }
-
-    gallery.innerHTML = "";
-    ANIMATIONS.forEach((item, index) => {
-      const card = document.createElement("article");
-      card.className = "gallery-card";
-      card.setAttribute("role", "listitem");
-      card.tabIndex = 0;
-
-      const mediaWrap = document.createElement("div");
-      mediaWrap.className = "gallery-media";
-      const preview = createMedia(item);
-      if (preview.tagName === "VIDEO") preview.autoplay = true;
-      mediaWrap.appendChild(preview);
-
-      const body = document.createElement("div");
-      body.className = "gallery-body";
-      body.innerHTML = `<h3>${escapeHtml(item.title || "Untitled")}</h3><p>${escapeHtml(item.description || "")}</p>`;
-
-      card.appendChild(mediaWrap);
-      card.appendChild(body);
-
-      const open = () => openLightbox(item);
-      card.addEventListener("click", open);
-      card.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          open();
-        }
-      });
-
-      gallery.appendChild(card);
+  function bindMediaClick(el, item) {
+    el.addEventListener("click", () => openLightbox(item));
+    el.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openLightbox(item);
+      }
     });
   }
 
-  function escapeHtml(text) {
-    const div = document.createElement("div");
-    div.textContent = text;
-    return div.innerHTML;
+  function renderMediaPanel(project) {
+    const panel = document.createElement("div");
+    panel.className = "project-media project-media--empty";
+
+    if (!project.media?.length) {
+      panel.innerHTML = `
+        <div class="media-placeholder" aria-hidden="true">
+          <span class="media-placeholder-icon"></span>
+        </div>
+        <p class="media-placeholder-text">Visualization coming soon</p>
+      `;
+      return panel;
+    }
+
+    panel.classList.remove("project-media--empty");
+
+    const primary = project.media[0];
+    const primaryBtn = document.createElement("button");
+    primaryBtn.type = "button";
+    primaryBtn.className = "media-primary";
+    primaryBtn.setAttribute("aria-label", `Open ${primary.title || project.title}`);
+    primaryBtn.appendChild(createMedia(primary, { autoplay: true }));
+    bindMediaClick(primaryBtn, primary);
+    panel.appendChild(primaryBtn);
+
+    if (project.media.length > 1) {
+      const thumbs = document.createElement("div");
+      thumbs.className = "media-thumbs";
+      project.media.slice(1).forEach((item) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "media-thumb";
+        btn.setAttribute("aria-label", `Open ${item.title || "media"}`);
+        btn.appendChild(createMedia(item, { autoplay: false }));
+        bindMediaClick(btn, item);
+        thumbs.appendChild(btn);
+      });
+      panel.appendChild(thumbs);
+    }
+
+    return panel;
+  }
+
+  function renderTags(tags) {
+    if (!tags?.length) return "";
+    return `<ul class="project-tags">${tags
+      .map((t) => `<li>${escapeHtml(t)}</li>`)
+      .join("")}</ul>`;
+  }
+
+  function renderProjects() {
+    if (!projectsList || typeof PROJECTS === "undefined") return;
+
+    projectsList.innerHTML = "";
+    PROJECTS.forEach((project, index) => {
+      const card = document.createElement("article");
+      card.className = "project-card";
+      card.id = project.id;
+      card.setAttribute("role", "listitem");
+
+      const indexStr = String(index + 1).padStart(2, "0");
+      const linkHtml = project.link
+        ? `<a class="project-link" href="${escapeHtml(project.link)}" target="_blank" rel="noopener noreferrer">View project →</a>`
+        : "";
+
+      card.innerHTML = `
+        <div class="project-card-inner">
+          <div class="project-copy">
+            <span class="project-index">${indexStr}</span>
+            <h3>${escapeHtml(project.title)}</h3>
+            ${renderTags(project.tags)}
+            <p>${escapeHtml(project.summary)}</p>
+            ${linkHtml}
+          </div>
+        </div>
+      `;
+
+      card.querySelector(".project-card-inner").appendChild(renderMediaPanel(project));
+      projectsList.appendChild(card);
+    });
   }
 
   lightbox?.querySelector(".lightbox-close")?.addEventListener("click", () => lightbox.close());
@@ -94,5 +142,5 @@
     if (lightboxContent) lightboxContent.innerHTML = "";
   });
 
-  renderGallery();
+  renderProjects();
 })();
