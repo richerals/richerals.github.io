@@ -57,6 +57,17 @@
     panel.className = "project-media project-media--empty";
 
     if (!project.media?.length) {
+      if (project.link) {
+        panel.classList.remove("project-media--empty");
+        panel.innerHTML = `
+          <a class="project-sim-launch" href="${escapeHtml(project.link)}">
+            <span class="project-sim-icon" aria-hidden="true"></span>
+            <span class="project-sim-title">Interactive simulation</span>
+            <span class="project-sim-desc">RK4 physics · drag magnets &amp; bob</span>
+          </a>
+        `;
+        return panel;
+      }
       panel.innerHTML = `
         <div class="media-placeholder" aria-hidden="true">
           <span class="media-placeholder-icon"></span>
@@ -114,14 +125,25 @@
 
       const indexStr = String(index + 1).padStart(2, "0");
       const linkHtml = project.link
-        ? `<a class="project-link" href="${escapeHtml(project.link)}" target="_blank" rel="noopener noreferrer">View project →</a>`
+        ? (() => {
+            const external = /^https?:\/\//i.test(project.link);
+            const attrs = external ? ' target="_blank" rel="noopener noreferrer"' : "";
+            const label = project.link.includes("magnetic-pendulum")
+              ? "Open simulation →"
+              : "View project →";
+            return `<a class="project-link" href="${escapeHtml(project.link)}"${attrs}>${label}</a>`;
+          })()
         : "";
+
+      const titleHtml = project.link
+        ? `<h3><a class="project-title-link" href="${escapeHtml(project.link)}">${escapeHtml(project.title)}</a></h3>`
+        : `<h3>${escapeHtml(project.title)}</h3>`;
 
       card.innerHTML = `
         <div class="project-card-inner">
           <div class="project-copy">
             <span class="project-index">${indexStr}</span>
-            <h3>${escapeHtml(project.title)}</h3>
+            ${titleHtml}
             ${renderTags(project.tags)}
             <p>${escapeHtml(project.summary)}</p>
             ${linkHtml}

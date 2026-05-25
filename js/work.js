@@ -13,9 +13,9 @@ const PROJECTS = [
     id: "nonlinear-systems",
     title: "Nonlinear systems",
     summary:
-      "Dynamics, stability, and emergent behavior in coupled physical systems.",
-    tags: ["dynamics", "simulation"],
-    link: null,
+      "Chaotic magnetic pendulum — RK4 integration of a damped particle on a multi-magnet potential with interactive magnets and trails.",
+    tags: ["dynamics", "chaos", "RK4"],
+    link: "/projects/magnetic-pendulum.html",
     media: [],
   },
   {
