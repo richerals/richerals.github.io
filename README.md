@@ -11,26 +11,25 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) and [http://localhost:3000/projects/nonlinear-systems/](http://localhost:3000/projects/nonlinear-systems/).
 
-Production build (static export to `out/`):
+Optional — preview the production build locally (not required for daily work):
 
 ```bash
 npm run build
-```
-
-Preview the export locally:
-
-```bash
 npx serve out
 ```
 
 ## Deploy on GitHub Pages
 
-For **https://richerals.github.io** (user site, repo root):
+Pushing to `main` runs [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml): `npm ci` → `npm run build` → publish `out/` to Pages.
 
-1. Run `npm run build` — output is in `out/`.
-2. Deploy the contents of `out/` to the `main` branch (either push `out/` as the site root, or use a GitHub Action that runs `npm ci && npm run build` and publishes `out/`).
-3. **Settings → Pages** → deploy from the branch/folder that contains the built site.
-4. `public/.nojekyll` is copied into `out/` so Jekyll does not strip `_next` assets.
+**One-time setup** in the repo on GitHub:
+
+1. **Settings → Pages → Build and deployment**
+2. **Source:** GitHub Actions (not “Deploy from branch”)
+
+Site URL: **https://richerals.github.io**
+
+`public/.nojekyll` is copied into `out/` so Jekyll does not strip `_next` assets.
 
 ## Project structure
 
