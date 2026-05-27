@@ -1,102 +1,51 @@
 # Personal website (GitHub Pages)
 
-Static site for your bio, research, and animation gallery. No build step required.
+Next.js static site: bio, projects, and an interactive **Nonlinear Systems** lab (RK4 magnetic pendulum, 3D potential, basins).
 
 ## Quick start
 
-1. Edit `index.html` — name, bio, contact.
-2. Edit `js/work.js` — research themes and linked media per project.
-3. Put animation files in `assets/animations/` (see formats below).
-4. Push to GitHub and enable Pages (see below).
-
-Local preview: open `index.html` in a browser, or run a simple server:
-
 ```bash
-# Python
-python -m http.server 8000
-
-# Node (if you have npx)
-npx serve .
+npm install
+npm run dev
 ```
 
-Then visit `http://localhost:8000`.
+Open [http://localhost:3000](http://localhost:3000) and [http://localhost:3000/projects/nonlinear-systems/](http://localhost:3000/projects/nonlinear-systems/).
 
-## Animation formats (recommended)
-
-| Format | Best for | Notes |
-|--------|----------|--------|
-| **MP4 (H.264)** | Most research loops | Smallest size at good quality; use `<video>`. |
-| **WebM** | Web-only | Often smaller than MP4; add as second `<source>` if needed. |
-| **GIF** | Legacy / simple exports | Large files; use only if you already have GIFs. |
-| **Poster JPG** | Video thumbnails | Optional `poster` in `work.js` for faster gallery load. |
-
-**Tips**
-
-- Keep gallery clips short (e.g. 5–30 s) and compress (HandBrake, ffmpeg, or export from your tool).
-- Target width ~1280px for full-width lightbox; thumbnails can be smaller.
-- GitHub repos have a soft limit (~100 MB per file); keep each video under ~25 MB when possible.
-
-Example ffmpeg resize/compress:
+Production build (static export to `out/`):
 
 ```bash
-ffmpeg -i input.mov -vf "scale=1280:-2" -c:v libx264 -crf 23 -an output.mp4
+npm run build
+```
+
+Preview the export locally:
+
+```bash
+npx serve out
 ```
 
 ## Deploy on GitHub Pages
 
-### Option A — User site (`username.github.io`)
+For **https://richerals.github.io** (user site, repo root):
 
-1. Create a repo named **`richerals.github.io`**.
-2. Copy this project into the repo root (not a subfolder).
-3. Push to `main`.
-4. In the repo: **Settings → Pages → Build and deployment → Source: Deploy from branch → Branch: `main` / `/ (root)`**.
-5. Site URL: **https://richerals.github.io**
+1. Run `npm run build` — output is in `out/`.
+2. Deploy the contents of `out/` to the `main` branch (either push `out/` as the site root, or use a GitHub Action that runs `npm ci && npm run build` and publishes `out/`).
+3. **Settings → Pages** → deploy from the branch/folder that contains the built site.
+4. `public/.nojekyll` is copied into `out/` so Jekyll does not strip `_next` assets.
 
-### Option B — Project site (`username.github.io/repo-name`)
-
-1. Create any repo (e.g. `personal-website`).
-2. Push this project to that repo.
-3. Enable Pages from `main` branch, root `/`.
-4. Site URL: `https://richerals.github.io/personal-website/`
-
-If you use Option B, you may need a `<base href="/personal-website/">` in `index.html` or host from a `docs/` folder — for a single-page site, **Option A is simpler**.
-
-### Custom domain (optional)
-
-Add a `CNAME` file with your domain, then configure DNS at your registrar (GitHub docs: [Custom domains](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site)).
-
-## Adding a visualization to a project
-
-1. Save file, e.g. `assets/animations/my-simulation.mp4`.
-2. Add to that project's `media` array in `js/work.js`:
-
-```javascript
-media: [
-  {
-    type: "video",
-    src: "assets/animations/my-simulation.mp4",
-    poster: "assets/animations/my-simulation-poster.jpg", // optional
-    title: "My simulation",
-    description: "Caption and link to paper if you like.",
-  },
-],
-```
-
-3. Commit and push; Pages updates in 1–2 minutes.
-
-## File layout
+## Project structure
 
 ```
-personal_website/
-├── index.html
-├── css/style.css
-├── js/
-│   ├── work.js         ← research themes + media per project
-│   └── main.js
-├── assets/animations/  ← MP4, GIF, posters
-└── README.md
+app/                    # Routes (home, nonlinear-systems)
+components/             # UI, simulation, potential (R3F), math, chaos
+context/                # Shared simulation state
+lib/                    # RK4, physics, potential, basins
+assets/animations/      # Optional media for future projects
 ```
+
+## Adding projects
+
+Edit `lib/projects.ts` for cards on the homepage. Interactive pages live under `app/projects/`.
 
 ## License
 
-Replace this section with your preferred license (e.g. MIT for code, CC BY for figures).
+Replace with your preferred license (e.g. MIT for code, CC BY for figures).
