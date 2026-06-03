@@ -6,14 +6,15 @@ import { useState } from "react";
 
 const PROJECT_LINKS = [
   { href: "/projects/nonlinear-systems/", label: "Nonlinear Systems" },
-  { href: "/#projects", label: "Geophysics" },
+  { href: "/projects/moonquake-globe/", label: "Geophysics (Moonquake)" },
 ];
 
 export function SiteNav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const isHome = pathname === "/";
-  const projectAnchors = pathname?.includes("/projects/nonlinear-systems");
+  const nonlinearAnchors = pathname?.includes("/projects/nonlinear-systems");
+  const moonquakeAnchors = pathname?.includes("/projects/moonquake-globe");
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-bg/90 backdrop-blur-md">
@@ -55,7 +56,7 @@ export function SiteNav() {
           <Link href="/#contact" className="hover:text-text">
             Contact
           </Link>
-          {projectAnchors && (
+          {nonlinearAnchors && (
             <>
               <span className="text-border">|</span>
               <Link href="#simulation" className="hover:text-text">
@@ -69,6 +70,26 @@ export function SiteNav() {
               </Link>
               <Link href="#chaos" className="hover:text-text">
                 Basin
+              </Link>
+            </>
+          )}
+          {moonquakeAnchors && (
+            <>
+              <span className="text-border">|</span>
+              <Link href="#historical-context" className="hover:text-text">
+                Context
+              </Link>
+              <Link href="#interactive-globe" className="hover:text-text">
+                Globe
+              </Link>
+              <Link href="#model" className="hover:text-text">
+                Mapping
+              </Link>
+              <Link href="#classification" className="hover:text-text">
+                Class
+              </Link>
+              <Link href="#future" className="hover:text-text">
+                Future
               </Link>
             </>
           )}

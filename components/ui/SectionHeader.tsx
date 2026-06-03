@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 export function SectionHeader({
   id,
   label,
@@ -7,7 +9,7 @@ export function SectionHeader({
   id?: string;
   label?: string;
   title: string;
-  intro?: string;
+  intro?: ReactNode;
 }) {
   return (
     <div id={id} className="mb-8 scroll-mt-20">

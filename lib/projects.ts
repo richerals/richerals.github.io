@@ -20,9 +20,10 @@ export const PROJECTS: Project[] = [
   {
     id: "geophysics",
     title: "Geophysics",
-    summary: "Earth and planetary processes; linking models to observable structure.",
-    tags: ["geophysics", "planetary"],
-    href: null,
+    summary:
+      "Apollo moonquake interactive globe for planetary seismology, event classification, and lunar interior interpretation.",
+    tags: ["geophysics", "moon", "seismology"],
+    href: "/projects/moonquake-globe/",
   },
   {
     id: "scientific-visualization",
