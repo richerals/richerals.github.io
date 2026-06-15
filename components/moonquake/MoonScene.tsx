@@ -5,13 +5,12 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Stars, useTexture } from "@react-three/drei";
 import { APOLLO_STATIONS } from "@/lib/moonquake/eventTypes";
 import { MoonMarkers, StationMarkers } from "./MoonMarkers";
-import moonTexture from "@/app/projects/moonquake-map/img/maps/moon.jpg";
 import { SRGBColorSpace } from "three";
 
 const MOON_RADIUS = 2;
 
 function MoonBody() {
-  const albedo = useTexture(moonTexture.src);
+  const albedo = useTexture("/moonquake/moon.jpg");
   albedo.colorSpace = SRGBColorSpace;
   return (
     <mesh>
