@@ -41,27 +41,30 @@ export function EquationsSection() {
           <div className="space-y-5 font-serif text-base leading-relaxed text-muted">
             <article className="rounded-lg border border-border bg-surface p-5">
               <p className="mb-3 font-sans text-base uppercase tracking-wide text-text">
-                Physical setup
+                How to read the model
               </p>
               <p>
-                A magnet is suspended from a string above a non-magnetic base. Fixed magnets on the base attract it,
-                and the motion changes as the parameters change.
+                The equation combines a restoring force toward the center, velocity damping, and attraction or repulsion
+                from each fixed magnet.
               </p>
               <div className="mt-4 grid gap-3 font-sans text-sm sm:grid-cols-2">
                 <p className="rounded border border-border bg-bg/40 p-3">
-                  <span className="block text-xs uppercase tracking-wide text-muted">Default base</span>
-                  <span className="text-text">Five positive magnets on a dashed ring</span>
+                  <span className="block text-xs uppercase tracking-wide text-muted">Damping b</span>
+                  <span className="text-text">Higher values drain motion faster.</span>
                 </p>
                 <p className="rounded border border-border bg-bg/40 p-3">
-                  <span className="block text-xs uppercase tracking-wide text-muted">Release point</span>
-                  <span className="whitespace-nowrap text-text">(2, −1.6)</span>
+                  <span className="block text-xs uppercase tracking-wide text-muted">Height h</span>
+                  <span className="text-text">Softens the magnetic pull near each source.</span>
+                </p>
+                <p className="rounded border border-border bg-bg/40 p-3">
+                  <span className="block text-xs uppercase tracking-wide text-muted">Mass m</span>
+                  <span className="text-text">Larger mass responds more slowly to force.</span>
+                </p>
+                <p className="rounded border border-border bg-bg/40 p-3">
+                  <span className="block text-xs uppercase tracking-wide text-muted">Polarity sigma</span>
+                  <span className="text-text">Red attracts; blue reverses the magnetic term.</span>
                 </p>
               </div>
-              <p className="mt-4">
-                Key controls: damping <strong className="text-text">b</strong>, height{" "}
-                <strong className="text-text">h</strong>, mass <strong className="text-text">m</strong>, magnet
-                positions, and polarity.
-              </p>
             </article>
 
             <article className="rounded-lg border border-border bg-surface p-5">

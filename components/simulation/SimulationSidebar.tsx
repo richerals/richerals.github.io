@@ -64,9 +64,11 @@ function NumInput({
 export function SimulationSidebar({
   onClearTrails,
   onReset,
+  showPlayback = true,
 }: {
   onClearTrails: () => void;
   onReset: () => void;
+  showPlayback?: boolean;
 }) {
   const {
     params,
@@ -136,18 +138,22 @@ export function SimulationSidebar({
         )}
       </Panel>
 
-      <Panel title="Playback">
-        <div className="flex flex-wrap gap-2">
-          <Button variant="primary" onClick={() => setRunning(true)} disabled={running}>
-            Play
-          </Button>
-          <Button onClick={() => setRunning(false)} disabled={!running}>
-            Pause
-          </Button>
-          <Button onClick={onReset}>Reset</Button>
-          <Button onClick={onClearTrails}>Clear trails</Button>
+      {showPlayback && (
+        <div className="hidden lg:block">
+          <Panel title="Playback">
+            <div className="flex flex-wrap gap-2">
+              <Button variant="primary" onClick={() => setRunning(true)} disabled={running}>
+                Play
+              </Button>
+              <Button onClick={() => setRunning(false)} disabled={!running}>
+                Pause
+              </Button>
+              <Button onClick={onReset}>Reset</Button>
+              <Button onClick={onClearTrails}>Clear trails</Button>
+            </div>
+          </Panel>
         </div>
-      </Panel>
+      )}
     </div>
   );
 }

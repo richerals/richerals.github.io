@@ -59,18 +59,31 @@ export function BasinSection() {
         <div className="rounded-lg border border-border bg-surface p-6">
           <div className="flex flex-wrap items-center gap-4">
             <Button onClick={compute} disabled={computing}>
-              {computing ? `Computing… ${Math.round(progress * 100)}%` : "Compute basins"}
+              {computing ? `Computing… ${Math.round(progress * 100)}%` : done ? "Recompute current basin" : "Compute current basin"}
             </Button>
-            <p className="text-xs text-muted">
-              Uses the same signed-magnet physics as the simulation. Higher resolution than the homepage preview.
-            </p>
           </div>
           <div className="mt-6 overflow-hidden rounded border border-border bg-bg">
-            <canvas
-              ref={canvasRef}
-              className={`mx-auto block max-h-[480px] w-full object-contain image-pixelated ${done ? "" : "min-h-[200px] opacity-30"}`}
-              aria-label="Basin of attraction map"
-            />
+            <div className="relative">
+              {!done && (
+                <img
+                  src="/nonlinear/default-basin.svg"
+                  alt="Precomputed default basin of attraction map"
+                  className={`mx-auto block aspect-square max-h-[480px] w-full object-contain image-pixelated ${
+                    computing ? "opacity-45" : ""
+                  }`}
+                />
+              )}
+              <canvas
+                ref={canvasRef}
+                className={`mx-auto max-h-[480px] w-full object-contain image-pixelated ${done ? "block" : "hidden"}`}
+                aria-label="Basin of attraction map"
+              />
+              {computing && (
+                <p className="absolute inset-0 flex items-center justify-center px-4 text-center text-xs text-muted">
+                  Computing current basin...
+                </p>
+              )}
+            </div>
           </div>
           <ul className="mt-4 flex flex-wrap gap-3 text-xs text-muted">
             {magnets.slice(0, 6).map((m, i) => (
